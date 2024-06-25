@@ -1,0 +1,14 @@
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\bin\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.exe
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\bin\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.deps.json
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\bin\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.runtimeconfig.json
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\bin\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.dll
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\bin\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.pdb
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.AssemblyInfoInputs.cache
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.AssemblyInfo.cs
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.csproj.CoreCompileInputs.cache
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.dll
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\refint\tl1-proyectofinal2024-GonzaSanPla.dll
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.pdb
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\tl1-proyectofinal2024-GonzaSanPla.genruntimeconfig.cache
+C:\Users\Alumno\tl1-proyectofinal2024-GonzaSanPla\obj\Debug\net8.0\ref\tl1-proyectofinal2024-GonzaSanPla.dll
