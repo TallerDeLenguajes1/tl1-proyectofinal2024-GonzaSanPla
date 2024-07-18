@@ -19,10 +19,14 @@ Colores y su signficado:
 Personajes Jugador;
 Personajes Enemigo;
 
-// Jugador = await FabricaDeJugador();
-// Jugador.MostrarEstadisticas();
-Enemigo = await FabricaDeEnemigo();
-Enemigo.MostrarEstadisticas();
+Jugador = await FabricaDeJugador();
+Jugador.MostrarEstadisticas();
+while(Jugador.EstaVivo())
+{
+    Enemigo = await FabricaDeEnemigo();
+    Enemigo.PresentarEnemigo();
+    Jugador=Pelear(Jugador,Enemigo);
+}
 
 
 static async Task<Personajes> FabricaDeJugador()
@@ -37,11 +41,11 @@ static async Task<Personajes> FabricaDeJugador()
     return pj;
 }
 
-
 static async Task<Personajes> FabricaDeEnemigo()
 {
     Random rand=new Random();
     // InfoBasica info= await ObtenerInfoBas();
+    //CAMBIAR Enemigo por el nombre traido por la API
     Personajes pj = new Personajes("Enemigo", rand.Next(1,4));//Genera un numero al azar entre 1 y 3 
     return pj;
 }
@@ -101,4 +105,10 @@ static int ElegirRaza()
     }while(!condiciones);
 
     return raza;
+}
+
+static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
+{
+    
+    return Jugador;
 }

@@ -27,9 +27,7 @@ public class Personajes
 
     public Personajes(string NombreIngresado, int numRaza)
     {
-        // Console.WriteLine(Datos.first);
-        // Nombre=Datos.first;
-        Nombre= "Luis"; // Momentaneo hasta poder utilizar bien la API
+        Nombre= NombreIngresado; 
         Vida=100;
         Danio=20;
         Evasion=75;
@@ -77,6 +75,26 @@ public class Personajes
                 break;
         }
 
+    }
+    public void PresentarEnemigo()
+    {
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("\nTu proximo enemigo sera:");
+        switch (Raza)
+         {
+            case Razas.Hada:
+                Console.ForegroundColor = ConsoleColor.Magenta;
+                Console.WriteLine("El/La Hada"+Nombre);
+                break;
+            case Razas.Centauro:
+                Console.ForegroundColor = ConsoleColor.DarkCyan;
+                Console.WriteLine("El/La Centauro"+Nombre);
+                break;
+            case Razas.Dragon:
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("El/La Dragon"+Nombre);
+                break;
+        }
     }
     public bool EstaVivo()
     {
