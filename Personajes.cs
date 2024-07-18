@@ -3,11 +3,6 @@ using System.Text.Json;
 
 namespace EspacioPersonajes;
 
-public enum Razas{
-    Hada,
-    Dragon,
-    Centauro
-}
 
 public class Personajes
 {
@@ -22,7 +17,7 @@ public class Personajes
     private int defensa;
 
     private int pociones;
-    private Razas raza;
+    private int raza; // 1- Hada 2-Centauro 3- Ogro
 
     public Personajes(string NombreIngresado, int numRaza)
     {
@@ -32,7 +27,7 @@ public class Personajes
         switch(numRaza)
         {
             case 1:                     //Balancear las estadisticas 
-                Raza=Razas.Hada;
+                Raza= numRaza;
                 VidaMaxima=75;
                 VidaActual=75;
                 Danio=25;
@@ -40,7 +35,7 @@ public class Personajes
                 Defensa=25;
                 break;
             case 2:
-                Raza=Razas.Centauro;
+                Raza=numRaza;
                 VidaMaxima=100;
                 VidaActual=100;
                 Danio=25;
@@ -48,7 +43,7 @@ public class Personajes
                 Defensa=50;
                 break;
             case 3:
-                Raza=Razas.Dragon;
+                Raza=numRaza;
                 VidaMaxima=125;
                 VidaActual=125;
                 Danio=25;
@@ -67,23 +62,23 @@ public class Personajes
         Console.WriteLine("   VidaActual:"+VidaActual);
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("   Danio:"+Danio);
-        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.ForegroundColor = ConsoleColor.Cyan;
         Console.WriteLine("   Evasion:"+Evasion);
-        Console.ForegroundColor = ConsoleColor.Gray;
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("   Defensa:"+Defensa);
         switch(Raza)
         {
-            case Razas.Hada:
+            case 1:
                 Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine("   Raza: Hada");
                 break;
-            case Razas.Centauro:
+            case 2:
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
                 Console.WriteLine("   Raza: Centauro");
                 break;
-            case Razas.Dragon:
+            case 3:
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("   Raza: Dragon");
+                Console.WriteLine("   Raza: Ogro");
                 break;
         }
         Console.ForegroundColor = ConsoleColor.DarkRed;
@@ -95,21 +90,21 @@ public class Personajes
         Console.WriteLine("\nTu proximo enemigo sera:");
         switch (Raza)
          {
-            case Razas.Hada:
+            case 1:
                 Console.ForegroundColor = ConsoleColor.Magenta;
-                Console.WriteLine("El/La Hada"+Nombre);
+                Console.WriteLine(Nombre+",el/la Hada");
                 break;
-            case Razas.Centauro:
+            case 2:
                 Console.ForegroundColor = ConsoleColor.DarkCyan;
-                Console.WriteLine("El/La Centauro"+Nombre);
+                Console.WriteLine(Nombre+",el/la Centauro");
                 break;
-            case Razas.Dragon:
+            case 3:
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.WriteLine("El/La Dragon"+Nombre);
+                Console.WriteLine(Nombre+",el/la Ogro ");
                 break;
         }
     }
-    public bool EstaVivo()
+    public bool EstaVivo()// Si esta vivo retorna true
     {
         if(VidaActual!=0)
         {
@@ -130,14 +125,20 @@ public class Personajes
             VidaActual=VidaActual-danioRecibido;
         }
     }
+    public void MostrarVida()
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("\nVida de "+Nombre+": "+VidaActual);
+
+    }
     public string Nombre { get => nombre; set => nombre = value; }
-    public int VidaActual { get => VidaActual; set => VidaActual = value; }
+    public int VidaActual { get => vidaActual; set => vidaActual = value; }
     public int Evasion { get => evasion; set => evasion = value; }
     public int Defensa { get => defensa; set => defensa = value; }
     public int Danio { get => danio; set => danio = value; }
     public InfoBasica DatosBasicos { get => datosBasicos; set => datosBasicos = value; }
     public int Pociones { get => pociones; set => pociones = value; }
-    public Razas Raza { get => raza; set => raza = value; }
+    public int Raza { get => raza; set => raza = value; }
     public int VidaMaxima { get => vidaMaxima; set => vidaMaxima = value; }
 } 
 

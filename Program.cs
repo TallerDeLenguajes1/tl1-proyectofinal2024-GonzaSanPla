@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+using System.Collections;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EspacioPersonajes;
@@ -8,11 +9,12 @@ Colores y su signficado:
     Texto   - White
     Vida    - Green
     Daño    - Red
-    Evasion - DarkBlue
-    Defensa - Gray
+    Evasion - Cyan
+    Defensa - DarkBlue
     Hada    - Magenta
     Centauro- DarkCyan
-    Dragon  - DarkGreen
+    Ogro  - DarkGreen
+    Pociones- DarkRed
 
 */
 
@@ -21,12 +23,11 @@ Personajes Enemigo;
 
 Jugador = await FabricaDeJugador();
 Jugador.MostrarEstadisticas();
-while(Jugador.EstaVivo())
-{
+// while(Jugador.EstaVivo())
+// {
     Enemigo = await FabricaDeEnemigo();
-    Enemigo.PresentarEnemigo();
     Jugador=Pelear(Jugador,Enemigo);
-}
+// }
 
 
 static async Task<Personajes> FabricaDeJugador()
@@ -84,7 +85,7 @@ static int ElegirRaza()
         Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("\n  2-Centauro: El mas equilibrado");
         Console.ForegroundColor = ConsoleColor.DarkGreen;
-        Console.WriteLine("\n  3-Dragon: Es mas fuerte pero no esquiva ningun golpe");
+        Console.WriteLine("\n  3-Ogro: Es mas fuerte pero no esquiva ningun golpe");
         strRaza = Console.ReadLine();
         if (int.TryParse(strRaza, out raza))        // Para controlar si es un numero y sies un numero valido
         {
@@ -109,6 +110,31 @@ static int ElegirRaza()
 
 static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
 {
-    
+    string opcion;
+    Jugador.MostrarVida();
+    Enemigo.MostrarVida();
+    opcion=ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
+    if(Jugador.Raza<Enemigo.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
+    {
+
+    }
     return Jugador;
+}
+
+static string ElegirOpcion(Personajes Jugador)        // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
+{
+    string opcion;
+    do
+    {
+        Console.ForegroundColor = ConsoleColor.White;
+        Console.WriteLine("\nElija su siguiente movimiento:");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine(" 1-Artacar");
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine(" 2-Defender");
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine(" 3-Tomar pocion(Pociones restantes:"+Jugador.Pociones+")");  
+        opcion=Console.ReadLine();
+    }while(opcion!="1"&&opcion!="2"&&opcion!="3");
+    return opcion;
 }
