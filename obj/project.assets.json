@@ -8,26 +8,24 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Alumno\\.nuget\\packages\\": {}
+    "C:\\Users\\Usuario\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Alumno\\tl1-proyectofinal2024-GonzaSanPla\\tl1-proyectofinal2024-GonzaSanPla.csproj",
+      "projectUniqueName": "C:\\Users\\Usuario\\TP\\tl1-proyectofinal2024-GonzaSanPla\\tl1-proyectofinal2024-GonzaSanPla\\tl1-proyectofinal2024-GonzaSanPla.csproj",
       "projectName": "tl1-proyectofinal2024-GonzaSanPla",
-      "projectPath": "C:\\Users\\Alumno\\tl1-proyectofinal2024-GonzaSanPla\\tl1-proyectofinal2024-GonzaSanPla.csproj",
-      "packagesPath": "C:\\Users\\Alumno\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Alumno\\tl1-proyectofinal2024-GonzaSanPla\\obj\\",
+      "projectPath": "C:\\Users\\Usuario\\TP\\tl1-proyectofinal2024-GonzaSanPla\\tl1-proyectofinal2024-GonzaSanPla\\tl1-proyectofinal2024-GonzaSanPla.csproj",
+      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Usuario\\TP\\tl1-proyectofinal2024-GonzaSanPla\\tl1-proyectofinal2024-GonzaSanPla\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Alumno\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
-        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -66,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
