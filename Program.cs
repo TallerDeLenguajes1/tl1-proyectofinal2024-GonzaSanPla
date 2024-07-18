@@ -12,7 +12,7 @@ Colores y su signficado:
     Defensa - Gray
     Hada    - Magenta
     Centauro- DarkCyan
-    Dragon  - DarkRed
+    Dragon  - DarkGreen
 
 */
 
@@ -83,7 +83,7 @@ static int ElegirRaza()
         Console.WriteLine("\n  1-Hada: Fragil pero puede evitar muchos golpes");
         Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("\n  2-Centauro: El mas equilibrado");
-        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\n  3-Dragon: Es mas fuerte pero no esquiva ningun golpe");
         strRaza = Console.ReadLine();
         if (int.TryParse(strRaza, out raza))        // Para controlar si es un numero y sies un numero valido
