@@ -22,34 +22,35 @@ Colores y su signficado:
 Personajes Jugador;
 Personajes Enemigo;
 
+
 Jugador = await FabricaDeJugador();
 Jugador.MostrarEstadisticas();
 // while(Jugador.EstaVivo())
 // {
-    Enemigo = await FabricaDeEnemigo();
-    Enemigo.PresentarEnemigo();
-    Jugador=Pelear(Jugador,Enemigo);
+Enemigo = await FabricaDeEnemigo();
+Enemigo.PresentarEnemigo();
+Jugador = Pelear(Jugador, Enemigo);
 // }
 
 
 static async Task<Personajes> FabricaDeJugador()
 {
-   string nombreJ;
+    string nombreJ;
     int raza;
     Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("\nIngrese su nombre:");
     nombreJ = Console.ReadLine();
-    raza=ElegirRaza();
+    raza = ElegirRaza();
     Personajes pj = new Personajes(nombreJ, raza);
     return pj;
 }
 
 static async Task<Personajes> FabricaDeEnemigo()
 {
-    Random rand=new Random();
+    Random rand = new Random();
     // InfoBasica info= await ObtenerInfoBas();
     //CAMBIAR Enemigo por el nombre traido por la API
-    Personajes pj = new Personajes("Enemigo", rand.Next(1,4));//Genera un numero al azar entre 1 y 3 
+    Personajes pj = new Personajes("Enemigo", rand.Next(1, 4));//Genera un numero al azar entre 1 y 3 
     return pj;
 }
 
@@ -105,7 +106,7 @@ static int ElegirRaza()
             condiciones = false;
         }
 
-    }while(!condiciones);
+    } while (!condiciones);
 
     return raza;
 }
@@ -114,27 +115,27 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
 {
     string opcion;
     do
-    {    
+    {
         Jugador.MostrarVida();
         Enemigo.MostrarVida();
-        opcion=ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
-        if(Jugador.Raza>=Enemigo.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
+        opcion = ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
+        if (Jugador.Raza >= Enemigo.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
         {
-            switch(opcion)
+            switch (opcion)
             {
-                case"1":
-                    
-                    if(Jugador.EstaContrado())
+                case "1":
+                    Enemigo=Atacar(Jugador,Enemigo);
+                    if (Jugador.EstaContrado())
                     {
                         Jugador.Desoncentar();
                     }
                     break;
-                case"2":
+                case "2":
                     Jugador.Concentar();
                     break;
-                case"3":
+                case "3":
                     Jugador.UtilizarPocion();
-                    if(Jugador.EstaContrado())
+                    if (Jugador.EstaContrado())
                     {
                         Jugador.Desoncentar();
                     }
@@ -142,7 +143,7 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
 
             }
         }
-    }while(Jugador.EstaVivo()&&Enemigo.EstaVivo());    
+    } while (Jugador.EstaVivo() && Enemigo.EstaVivo());
     return Jugador;
 }
 
@@ -158,31 +159,42 @@ static string ElegirOpcion(Personajes Jugador)        // Regresa un string con 1
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine(" 2-Concentrar");
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine(" 3-Tomar pocion(Pociones restantes:"+Jugador.Pociones+")");  
-        opcion=Console.ReadLine();
-    }while(opcion!="1"&&opcion!="2"&&opcion!="3");
+        Console.WriteLine(" 3-Tomar pocion(Pociones restantes:" + Jugador.Pociones + ")");
+        opcion = Console.ReadLine();
+    } while (opcion != "1" && opcion != "2" && opcion != "3");
     return opcion;
 }
 
 static Personajes Atacar(Personajes Atacante, Personajes Defensor)
 {
-    Random rand= new Random();
-    int danioRealizado;
-    if(!Defensor.LoEsquiva(rand.Next(1,101)))                    //Para que sean numeros entre el 1 y el 100 
+    Random rand = new Random();
+    int danioRealizado,varConcentracion;
+    if (!Defensor.LoEsquiva(rand.Next(1, 101)))                    //Para que sean numeros entre el 1 y el 100 
     {
-        if(Atacante.EstaContrado()==Defensor.EstaContrado())    //Si los dos estan concentrados queda en un ataque normal porque se neutraliza
-        {
-           
-        }else
-        {
-            if(Atacante.EstaContrado())                         //Si no esta concentrado el atacante entonces tiene que estar concentrado el defensor en este caso 
-            {
-
-            }else
-            {
-
-            }
-        }
+        varConcentracion=VariableDeConcentracionParaCalcularDanio(Atacante,Defensor);
+        danioRealizado=Atacante.Danio*15*varConcentracion/Defensor.Defensa;     //15 es una variable de balanceo
+        Defensor.PerderVida(danioRealizado);
     }
     return Defensor;
+}
+
+static int VariableDeConcentracionParaCalcularDanio(Personajes Atacante, Personajes Defensor)       //Retorna 2 si estan neutro,4 si solo el atacante y 1 si solo el defensor
+{
+    
+    if (Atacante.EstaContrado() == Defensor.EstaContrado())    //Si los dos estan concentrados queda en un ataque normal porque se neutraliza
+    {
+        return 2;
+    }
+    else
+    {
+        if (Atacante.EstaContrado())                         //Si no esta concentrado el atacante entonces tiene que estar concentrado el defensor en este caso 
+        {
+            return 4;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
 }

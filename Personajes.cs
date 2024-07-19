@@ -11,8 +11,8 @@ public class Personajes
      
     private string nombre;
 
-    private int vidaActual;
-    private int vidaMaxima;
+    private float vidaActual;
+    private float vidaMaxima;
     private int danio;
     private int evasion;
     private int defensa;
@@ -43,7 +43,7 @@ public class Personajes
                 VidaActual=100;
                 Danio=25;
                 Evasion=75;
-                Defensa=50;
+                Defensa=30;
                 break;
             case 3:
                 Raza=numRaza;
@@ -51,7 +51,7 @@ public class Personajes
                 VidaActual=125;
                 Danio=25;
                 Evasion=100;
-                Defensa=75;
+                Defensa=35;
                 break;
         }
     }
@@ -192,14 +192,14 @@ public class Personajes
         }
     }
     public string Nombre { get => nombre; set => nombre = value; }
-    public int VidaActual { get => vidaActual; set => vidaActual = value; }
+    public float VidaActual { get => vidaActual; set => vidaActual = value; }
     public int Evasion { get => evasion; set => evasion = value; }
     public int Defensa { get => defensa; set => defensa = value; }
     public int Danio { get => danio; set => danio = value; }
     public InfoBasica DatosBasicos { get => datosBasicos; set => datosBasicos = value; }
     public int Pociones { get => pociones; set => pociones = value; }
     public int Raza { get => raza; set => raza = value; }
-    public int VidaMaxima { get => vidaMaxima; set => vidaMaxima = value; }
+    public float VidaMaxima { get => vidaMaxima; set => vidaMaxima = value; }
     public bool Concentrado { get => concentrado; set => concentrado = value; }
 } 
 
