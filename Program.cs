@@ -23,7 +23,7 @@ Personajes Jugador;
 Personajes Enemigo;
 
 
-Jugador = await FabricaDeJugador();
+Jugador = FabricaDeJugador();
 Jugador.MostrarEstadisticas();
 // while(Jugador.EstaVivo())
 // {
@@ -33,7 +33,7 @@ Jugador = Pelear(Jugador, Enemigo);
 // }
 
 
-static async Task<Personajes> FabricaDeJugador()
+static Personajes FabricaDeJugador()
 {
     string nombreJ;
     int raza;
@@ -113,7 +113,8 @@ static int ElegirRaza()
 
 static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
 {
-    string opcion;
+    PersonajesEnCombate ConjuntoDePersonaje=new PersonajesEnCombate();
+    int opcion;
     do
     {
         Jugador.MostrarVida();
@@ -121,35 +122,43 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
         opcion = ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
         if (Jugador.Raza >= Enemigo.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
         {
-            switch (opcion)
+           ConjuntoDePersonaje.Atacante=Jugador;                                    //Este bloque es para realizar la accion del jugador
+           ConjuntoDePersonaje.Defensor=Enemigo;
+           ConjuntoDePersonaje=RealizarMovimiento(ConjuntoDePersonaje,opcion);
+           Jugador=ConjuntoDePersonaje.Atacante;
+           Enemigo=ConjuntoDePersonaje.Defensor;
+            if(Enemigo.EstaVivo())
             {
-                case "1":
-                    Enemigo=Atacar(Jugador,Enemigo);
-                    if (Jugador.EstaContrado())
-                    {
-                        Jugador.Desoncentar();
-                    }
-                    break;
-                case "2":
-                    Jugador.Concentar();
-                    break;
-                case "3":
-                    Jugador.UtilizarPocion();
-                    if (Jugador.EstaContrado())
-                    {
-                        Jugador.Desoncentar();
-                    }
-                    break;
-
+                ConjuntoDePersonaje.Atacante=Enemigo;                                    //Este bloque es para realizar la accion del enemigo
+                ConjuntoDePersonaje.Defensor=Jugador;
+                ConjuntoDePersonaje=RealizarMovimiento(ConjuntoDePersonaje,Enemigo.ElegirMovimiento());
+                Enemigo=ConjuntoDePersonaje.Atacante;
+                Jugador=ConjuntoDePersonaje.Defensor;
+            }
+        }else
+        {
+            ConjuntoDePersonaje.Atacante=Enemigo;                                    //Este bloque es para realizar la accion del enemigo
+            ConjuntoDePersonaje.Defensor=Jugador;
+            ConjuntoDePersonaje=RealizarMovimiento(ConjuntoDePersonaje,Enemigo.ElegirMovimiento());
+            Enemigo=ConjuntoDePersonaje.Atacante;
+            Jugador=ConjuntoDePersonaje.Defensor;
+            if(Jugador.EstaVivo())
+            {
+                ConjuntoDePersonaje.Atacante=Jugador;                                    //Este bloque es para realizar la accion del jugador
+                ConjuntoDePersonaje.Defensor=Enemigo;
+                ConjuntoDePersonaje=RealizarMovimiento(ConjuntoDePersonaje,opcion);
+                Jugador=ConjuntoDePersonaje.Atacante;
+                Enemigo=ConjuntoDePersonaje.Defensor;
             }
         }
     } while (Jugador.EstaVivo() && Enemigo.EstaVivo());
     return Jugador;
 }
 
-static string ElegirOpcion(Personajes Jugador)        // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
+static int ElegirOpcion(Personajes Jugador)        // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
 {
-    string opcion;
+    int opcion;
+    string strOpcion;
     do
     {
         Console.ForegroundColor = ConsoleColor.White;
@@ -160,8 +169,9 @@ static string ElegirOpcion(Personajes Jugador)        // Regresa un string con 1
         Console.WriteLine(" 2-Concentrar");
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(" 3-Tomar pocion(Pociones restantes:" + Jugador.Pociones + ")");
-        opcion = Console.ReadLine();
-    } while (opcion != "1" && opcion != "2" && opcion != "3");
+        strOpcion = Console.ReadLine();
+    } while (strOpcion != "1" && strOpcion != "2" && strOpcion != "3");
+    int.TryParse(strOpcion,out opcion);
     return opcion;
 }
 
@@ -174,6 +184,8 @@ static Personajes Atacar(Personajes Atacante, Personajes Defensor)
         varConcentracion=VariableDeConcentracionParaCalcularDanio(Atacante,Defensor);
         danioRealizado=Atacante.Danio*15*varConcentracion/Defensor.Defensa;     //15 es una variable de balanceo
         Defensor.PerderVida(danioRealizado);
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine(Atacante.Nombre+" ha realizado "+danioRealizado+" puntos de daño a "+Defensor.Nombre);
     }
     return Defensor;
 }
@@ -197,4 +209,30 @@ static int VariableDeConcentracionParaCalcularDanio(Personajes Atacante, Persona
         }
     }
 
+}
+
+static PersonajesEnCombate RealizarMovimiento(PersonajesEnCombate ConjuntoDePersonaje,int opcion)
+{
+
+     switch (opcion)
+            {
+                case 1:
+                    ConjuntoDePersonaje.Defensor=Atacar(ConjuntoDePersonaje.Atacante,ConjuntoDePersonaje.Defensor);
+                    if (ConjuntoDePersonaje.Atacante.EstaContrado())
+                    {
+                        ConjuntoDePersonaje.Atacante.Desoncentar();
+                    }
+                    break;
+                case 2:
+                    ConjuntoDePersonaje.Atacante.Concentar();
+                    break;
+                case 3:
+                    ConjuntoDePersonaje.Atacante.UtilizarPocion();
+                    if (ConjuntoDePersonaje.Atacante.EstaContrado())
+                    {
+                        ConjuntoDePersonaje.Atacante.Desoncentar();
+                    }
+                    break;
+            }
+    return ConjuntoDePersonaje;
 }

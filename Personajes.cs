@@ -22,11 +22,14 @@ public class Personajes
 
     private bool concentrado;
 
+    private int movimiento;//Esta es una varible unicamente para que el enemigo elija movimiento 
+
     public Personajes(string NombreIngresado, int numRaza)
     {
         Nombre= NombreIngresado; 
         Pociones=3;
         Concentrado=false;
+        Movimiento=1;
         switch(numRaza)
         {
             case 1:                     //Balancear las estadisticas 
@@ -181,7 +184,7 @@ public class Personajes
     }
     public bool LoEsquiva(int numAtaque)
     {
-        if(numAtaque>Evasion)
+        if(Evasion>numAtaque)
         {
             return false;
         }else
@@ -190,6 +193,39 @@ public class Personajes
             Console.WriteLine(Nombre+" ha evitado el ataque");
             return true;
         }
+    }
+
+    public int ElegirMovimiento()
+    {
+        switch(Raza)
+        {
+            case 1:
+                if(Movimiento==1) //Esto es para el patron de moviento del Hada que es: Concentrar-Ataque
+                {
+                    Movimiento=2;
+                    return 2;
+                }else
+                {
+                    Movimiento=1;
+                    return 1;
+                }
+                break;
+            case 2:
+                if(Movimiento<3) //Esto es para el patron de moviento del Centauro que es: Ataque-Ataque-Concentrar
+                    {
+                        Movimiento++;
+                        return 1;
+                    }else
+                    {
+                        Movimiento=1;
+                        return 2;
+                    }
+                break;
+            case 3:             //Esto es para el patron de moviento del Ogro que es: Ataque
+                return 1;
+                break;
+        }
+        return 1;   //Lo agrego por si llega a haber un error con la Raza
     }
     public string Nombre { get => nombre; set => nombre = value; }
     public float VidaActual { get => vidaActual; set => vidaActual = value; }
@@ -201,6 +237,13 @@ public class Personajes
     public int Raza { get => raza; set => raza = value; }
     public float VidaMaxima { get => vidaMaxima; set => vidaMaxima = value; }
     public bool Concentrado { get => concentrado; set => concentrado = value; }
+    public int Movimiento { get => movimiento; set => movimiento = value; }
 } 
 
 
+public class PersonajesEnCombate()      //Esto variable la creo para poder utlizar una funcion que me modifique y retone a ambos
+{
+     public Personajes Atacante;
+     public Personajes Defensor;
+
+}
