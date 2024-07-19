@@ -1,3 +1,4 @@
+using System.Drawing;
 using System.Text.Json;
 
 
@@ -19,11 +20,13 @@ public class Personajes
     private int pociones;
     private int raza; // 1- Hada 2-Centauro 3- Ogro
 
+    private bool concentrado;
+
     public Personajes(string NombreIngresado, int numRaza)
     {
         Nombre= NombreIngresado; 
         Pociones=3;
-        
+        Concentrado=false;
         switch(numRaza)
         {
             case 1:                     //Balancear las estadisticas 
@@ -62,9 +65,9 @@ public class Personajes
         Console.WriteLine("   VidaActual:"+VidaActual);
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("   Danio:"+Danio);
-        Console.ForegroundColor = ConsoleColor.Cyan;
-        Console.WriteLine("   Evasion:"+Evasion);
         Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine("   Evasion:"+Evasion);
+        Console.ForegroundColor = ConsoleColor.Gray;
         Console.WriteLine("   Defensa:"+Defensa);
         switch(Raza)
         {
@@ -108,10 +111,10 @@ public class Personajes
     {
         if(VidaActual!=0)
         {
-            return false;
+            return true;
         }else
         {
-            return true;
+            return false;
         }
     }
 
@@ -131,6 +134,63 @@ public class Personajes
         Console.WriteLine("\nVida de "+Nombre+": "+VidaActual);
 
     }
+
+    public void UtilizarPocion()
+    {
+        if(Pociones!=0)
+        {
+            if((VidaActual+(VidaMaxima/2))>vidaMaxima)
+            {
+                VidaActual=VidaMaxima;
+            }else
+            {
+                VidaActual=VidaActual+(VidaMaxima/2);
+            }
+            
+            Pociones--;
+            Console.ForegroundColor=ConsoleColor.DarkRed;
+            Console.WriteLine("\n"+Nombre+" ha utilizado una pocion, quedan "+Pociones+" pociones");
+        }else
+        {            
+            Console.ForegroundColor=ConsoleColor.DarkRed;
+            Console.WriteLine("A "+Nombre+" no le quedan mas pociones");
+        }
+
+    }
+    public void Concentar()
+    {
+        Concentrado=true;
+        Console.ForegroundColor=ConsoleColor.Blue;
+        Console.WriteLine("\n"+Nombre+" se ha concentrado");
+    }
+    public void Desoncentar()
+    {
+        Concentrado=false;
+        Console.ForegroundColor=ConsoleColor.Blue;
+        Console.WriteLine("\n"+Nombre+" se ha desconcentrado");
+    }
+    public bool EstaContrado()
+    {
+        if(Concentrado)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
+    }
+    public bool LoEsquiva(int numAtaque)
+    {
+        if(numAtaque>Evasion)
+        {
+            return false;
+        }else
+        {
+            Console.ForegroundColor=ConsoleColor.DarkBlue;
+            Console.WriteLine(Nombre+" ha evitado el ataque");
+            return true;
+        }
+    }
     public string Nombre { get => nombre; set => nombre = value; }
     public int VidaActual { get => vidaActual; set => vidaActual = value; }
     public int Evasion { get => evasion; set => evasion = value; }
@@ -140,6 +200,7 @@ public class Personajes
     public int Pociones { get => pociones; set => pociones = value; }
     public int Raza { get => raza; set => raza = value; }
     public int VidaMaxima { get => vidaMaxima; set => vidaMaxima = value; }
+    public bool Concentrado { get => concentrado; set => concentrado = value; }
 } 
 
 

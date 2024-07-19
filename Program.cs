@@ -1,21 +1,22 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Collections;
+using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EspacioPersonajes;
 
 /*
 Colores y su signficado:
-    Texto   - White
-    Vida    - Green
-    Daño    - Red
-    Evasion - Cyan
-    Defensa - DarkBlue
-    Hada    - Magenta
-    Centauro- DarkCyan
-    Ogro  - DarkGreen
-    Pociones- DarkRed
-
+    Texto       - White
+    Vida        - Green
+    Daño        - Red
+    Evasion     - DarkBlue
+    Defensa     - Gray
+    Hada        - Magenta
+    Centauro    - DarkCyan
+    Ogro        - DarkGreen
+    Pociones    - DarkRed
+    Concentrar  - Blue
 */
 
 Personajes Jugador;
@@ -26,6 +27,7 @@ Jugador.MostrarEstadisticas();
 // while(Jugador.EstaVivo())
 // {
     Enemigo = await FabricaDeEnemigo();
+    Enemigo.PresentarEnemigo();
     Jugador=Pelear(Jugador,Enemigo);
 // }
 
@@ -111,13 +113,36 @@ static int ElegirRaza()
 static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
 {
     string opcion;
-    Jugador.MostrarVida();
-    Enemigo.MostrarVida();
-    opcion=ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
-    if(Jugador.Raza<Enemigo.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
-    {
+    do
+    {    
+        Jugador.MostrarVida();
+        Enemigo.MostrarVida();
+        opcion=ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
+        if(Jugador.Raza>=Enemigo.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
+        {
+            switch(opcion)
+            {
+                case"1":
+                    
+                    if(Jugador.EstaContrado())
+                    {
+                        Jugador.Desoncentar();
+                    }
+                    break;
+                case"2":
+                    Jugador.Concentar();
+                    break;
+                case"3":
+                    Jugador.UtilizarPocion();
+                    if(Jugador.EstaContrado())
+                    {
+                        Jugador.Desoncentar();
+                    }
+                    break;
 
-    }
+            }
+        }
+    }while(Jugador.EstaVivo()&&Enemigo.EstaVivo());    
     return Jugador;
 }
 
@@ -130,11 +155,34 @@ static string ElegirOpcion(Personajes Jugador)        // Regresa un string con 1
         Console.WriteLine("\nElija su siguiente movimiento:");
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine(" 1-Artacar");
-        Console.ForegroundColor = ConsoleColor.DarkBlue;
-        Console.WriteLine(" 2-Defender");
+        Console.ForegroundColor = ConsoleColor.Blue;
+        Console.WriteLine(" 2-Concentrar");
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(" 3-Tomar pocion(Pociones restantes:"+Jugador.Pociones+")");  
         opcion=Console.ReadLine();
     }while(opcion!="1"&&opcion!="2"&&opcion!="3");
     return opcion;
+}
+
+static Personajes Atacar(Personajes Atacante, Personajes Defensor)
+{
+    Random rand= new Random();
+    int danioRealizado;
+    if(!Defensor.LoEsquiva(rand.Next(1,101)))                    //Para que sean numeros entre el 1 y el 100 
+    {
+        if(Atacante.EstaContrado()==Defensor.EstaContrado())    //Si los dos estan concentrados queda en un ataque normal porque se neutraliza
+        {
+           
+        }else
+        {
+            if(Atacante.EstaContrado())                         //Si no esta concentrado el atacante entonces tiene que estar concentrado el defensor en este caso 
+            {
+
+            }else
+            {
+
+            }
+        }
+    }
+    return Defensor;
 }
