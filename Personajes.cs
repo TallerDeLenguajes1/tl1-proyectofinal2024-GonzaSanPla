@@ -45,7 +45,7 @@ public class Personajes
                 VidaMaxima=100;
                 VidaActual=100;
                 Ataque=25;
-                Evasion=75;
+                Evasion=25;
                 Defensa=30;
                 break;
             case 3:
@@ -53,7 +53,7 @@ public class Personajes
                 VidaMaxima=125;
                 VidaActual=125;
                 Ataque=25;
-                Evasion=100;
+                Evasion=0;
                 Defensa=35;
                 break;
         }
@@ -184,7 +184,7 @@ public class Personajes
     }
     public bool LoEsquiva(int numAtaque)
     {
-        if(Evasion>numAtaque)
+        if(numAtaque>Evasion)
         {
             return false;
         }else
