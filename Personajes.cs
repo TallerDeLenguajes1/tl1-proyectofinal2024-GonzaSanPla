@@ -13,7 +13,7 @@ public class Personajes
 
     private float vidaActual;
     private float vidaMaxima;
-    private int danio;
+    private int ataque;
     private int evasion;
     private int defensa;
 
@@ -36,7 +36,7 @@ public class Personajes
                 Raza= numRaza;
                 VidaMaxima=75;
                 VidaActual=75;
-                Danio=25;
+                Ataque=25;
                 Evasion=50;
                 Defensa=25;
                 break;
@@ -44,7 +44,7 @@ public class Personajes
                 Raza=numRaza;
                 VidaMaxima=100;
                 VidaActual=100;
-                Danio=25;
+                Ataque=25;
                 Evasion=75;
                 Defensa=30;
                 break;
@@ -52,7 +52,7 @@ public class Personajes
                 Raza=numRaza;
                 VidaMaxima=125;
                 VidaActual=125;
-                Danio=25;
+                Ataque=25;
                 Evasion=100;
                 Defensa=35;
                 break;
@@ -67,7 +67,7 @@ public class Personajes
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("   VidaActual:"+VidaActual);
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("   Danio:"+Danio);
+        Console.WriteLine("   Ataque:"+Ataque);
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("   Evasion:"+Evasion);
         Console.ForegroundColor = ConsoleColor.Gray;
@@ -227,11 +227,33 @@ public class Personajes
         }
         return 1;   //Lo agrego por si llega a haber un error con la Raza
     }
+
+    public void RecibirRecompensa(int razaEnemiga)
+    {
+        switch(razaEnemiga)
+        {
+            case 1:
+                Evasion+=10;
+                Console.ForegroundColor=ConsoleColor.DarkBlue;
+                Console.WriteLine("La evasion de "+Nombre+" ha aumentado");
+                break;
+            case 2:
+                Ataque+=10;
+                Console.ForegroundColor=ConsoleColor.Red;
+                Console.WriteLine("El ataque de "+Nombre+" ha aumentado");
+                break;
+            case 3:
+                Defensa+=5;
+                Console.ForegroundColor=ConsoleColor.Gray;
+                Console.WriteLine("La defensa de "+Nombre+" ha aumentado");
+                break;
+        }
+    }
     public string Nombre { get => nombre; set => nombre = value; }
     public float VidaActual { get => vidaActual; set => vidaActual = value; }
     public int Evasion { get => evasion; set => evasion = value; }
     public int Defensa { get => defensa; set => defensa = value; }
-    public int Danio { get => danio; set => danio = value; }
+    public int Ataque { get => ataque; set => ataque = value; }
     public InfoBasica DatosBasicos { get => datosBasicos; set => datosBasicos = value; }
     public int Pociones { get => pociones; set => pociones = value; }
     public int Raza { get => raza; set => raza = value; }

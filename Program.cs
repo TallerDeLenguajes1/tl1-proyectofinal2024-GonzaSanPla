@@ -9,7 +9,7 @@ using EspacioPersonajes;
 Colores y su signficado:
     Texto       - White
     Vida        - Green
-    Daño        - Red
+    Ataque       - Red
     Evasion     - DarkBlue
     Defensa     - Gray
     Hada        - Magenta
@@ -25,12 +25,16 @@ Personajes Enemigo;
 
 Jugador = FabricaDeJugador();
 Jugador.MostrarEstadisticas();
-// while(Jugador.EstaVivo())
-// {
-Enemigo = await FabricaDeEnemigo();
-Enemigo.PresentarEnemigo();
-Jugador = Pelear(Jugador, Enemigo);
-// }
+while(Jugador.EstaVivo())
+{
+    Enemigo = await FabricaDeEnemigo();
+    Enemigo.PresentarEnemigo();
+    Jugador = Pelear(Jugador, Enemigo);
+    if(Jugador.EstaVivo())
+    {
+        Jugador.RecibirRecompensa(Enemigo.Raza);
+    }
+}
 
 
 static Personajes FabricaDeJugador()
@@ -120,7 +124,7 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
         Jugador.MostrarVida();
         Enemigo.MostrarVida();
         opcion = ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
-        if (Jugador.Raza >= Enemigo.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
+        if (Enemigo.Raza >= Jugador.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
         {
            ConjuntoDePersonaje.Atacante=Jugador;                                    //Este bloque es para realizar la accion del jugador
            ConjuntoDePersonaje.Defensor=Enemigo;
@@ -152,6 +156,11 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
             }
         }
     } while (Jugador.EstaVivo() && Enemigo.EstaVivo());
+    if(Jugador.EstaVivo())
+    {
+        Console.WriteLine("Has derrotado a "+ Enemigo.Nombre);
+    }
+
     return Jugador;
 }
 
@@ -163,7 +172,7 @@ static int ElegirOpcion(Personajes Jugador)        // Regresa un string con 1 pa
     {
         Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("\nElija su siguiente movimiento:");
-        Console.ForegroundColor = ConsoleColor.Green;
+        Console.ForegroundColor = ConsoleColor.Green;   //Exepcion de color sino es demasiado rojo
         Console.WriteLine(" 1-Artacar");
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine(" 2-Concentrar");
@@ -182,7 +191,7 @@ static Personajes Atacar(Personajes Atacante, Personajes Defensor)
     if (!Defensor.LoEsquiva(rand.Next(1, 101)))                    //Para que sean numeros entre el 1 y el 100 
     {
         varConcentracion=VariableDeConcentracionParaCalcularDanio(Atacante,Defensor);
-        danioRealizado=Atacante.Danio*15*varConcentracion/Defensor.Defensa;     //15 es una variable de balanceo
+        danioRealizado=Atacante.Ataque*15*varConcentracion/Defensor.Defensa;     //15 es una variable de balanceo
         Defensor.PerderVida(danioRealizado);
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine(Atacante.Nombre+" ha realizado "+danioRealizado+" puntos de daño a "+Defensor.Nombre);
