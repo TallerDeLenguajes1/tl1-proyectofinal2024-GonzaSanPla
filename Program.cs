@@ -27,6 +27,7 @@ Jugador = FabricaDeJugador();
 Jugador.MostrarEstadisticas();
 while(Jugador.EstaVivo())
 {
+    Jugador.MostrarOleada();
     Enemigo = await FabricaDeEnemigo();
     Enemigo.PresentarEnemigo();
     Jugador = Pelear(Jugador, Enemigo);
@@ -35,6 +36,7 @@ while(Jugador.EstaVivo())
         Jugador.RecibirRecompensa(Enemigo.Raza);
     }
 }
+Finalizar(Jugador);
 
 
 static Personajes FabricaDeJugador()
@@ -159,6 +161,7 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
     if(Jugador.EstaVivo())
     {
         Console.WriteLine("Has derrotado a "+ Enemigo.Nombre);
+        Jugador.AumentarOleada();
     }
 
     return Jugador;
@@ -244,4 +247,16 @@ static PersonajesEnCombate RealizarMovimiento(PersonajesEnCombate ConjuntoDePers
                     break;
             }
     return ConjuntoDePersonaje;
+}
+
+static void Finalizar(Personajes Jugador)
+{
+    string JugadorSerializado;
+    var helper= new HelperDeJson();
+    string NombreDelArchivo="Historial del jugadores";
+
+    Jugador.MostrarOleadaFinal();
+    JugadorSerializado=JsonSerializer.Serialize(Jugador);
+
+    helper.GuardarArchivoTexto(NombreDelArchivo,JugadorSerializado);
 }

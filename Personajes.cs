@@ -16,13 +16,12 @@ public class Personajes
     private int ataque;
     private int evasion;
     private int defensa;
-
     private int pociones;
     private int raza; // 1- Hada 2-Centauro 3- Ogro
-
     private bool concentrado;
-
     private int movimiento;//Esta es una varible unicamente para que el enemigo elija movimiento 
+    private int oleada;
+
 
     public Personajes(string NombreIngresado, int numRaza)
     {
@@ -30,6 +29,7 @@ public class Personajes
         Pociones=3;
         Concentrado=false;
         Movimiento=1;
+        oleada=1;
         switch(numRaza)
         {
             case 1:                     //Balancear las estadisticas 
@@ -248,6 +248,21 @@ public class Personajes
                 Console.WriteLine("La defensa de "+Nombre+" ha aumentado");
                 break;
         }
+    }
+
+    public void AumentarOleada()
+    {
+        oleada++;
+    }
+    public void MostrarOleada()
+    {
+        Console.ForegroundColor=ConsoleColor.White;
+        Console.WriteLine("Oleada numero:"+oleada);
+    }
+    public void MostrarOleadaFinal()
+    {
+        Console.ForegroundColor=ConsoleColor.White;
+        Console.WriteLine(Nombre+" lllego hasta la oleada numero:"+oleada);
     }
     public string Nombre { get => nombre; set => nombre = value; }
     public float VidaActual { get => vidaActual; set => vidaActual = value; }
