@@ -27,9 +27,9 @@ Personajes Enemigo;
 Inicio();
 Jugador = FabricaDeJugador();
 Jugador.MostrarEstadisticas();
-while (Jugador.EstaVivo())
+while (Jugador.EstaVivo()&&!Jugador.Ganar())
 {
-    Jugador.MostrarOleada();
+    MostrarOleada(Jugador);
     Enemigo = await FabricaDeEnemigo();
     Enemigo.PresentarEnemigo();
     Jugador = Pelear(Jugador, Enemigo);
@@ -60,13 +60,21 @@ static Personajes FabricaDeJugador()
     string nombreJ;
     int raza;
     Console.ForegroundColor = ConsoleColor.White;
-    Console.WriteLine("\nIngrese tu nombre:");
-    nombreJ = Console.ReadLine();
+    do
+    {
+        Console.WriteLine("\nIngresa tu nombre:");
+        nombreJ = Console.ReadLine();
+    }while (nombreJ=="");
     raza = ElegirRaza();
     Personajes pj = new Personajes(nombreJ, raza);
     return pj;
 }
-
+static void MostrarOleada(Personajes Jugador)
+{
+    ProximaOleada proxOl= new ProximaOleada();
+    proxOl.Mostrar();
+    Jugador.MostrarOleada();
+}
 static async Task<Personajes> FabricaDeEnemigo()
 {
     Random rand = new Random();
@@ -123,6 +131,7 @@ static int ElegirRaza()
         Console.WriteLine("\n  2-Centauro");
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\n  3-Ogro");
+        Console.ForegroundColor=ConsoleColor.White;
         strRaza = Console.ReadLine();
         if (int.TryParse(strRaza, out raza))        // Para controlar si es un numero y sies un numero valido
         {
@@ -156,6 +165,7 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
         opcion = ElegirOpcion(Jugador);          // Regresa un string con 1 para atacar, 2 para defender y 3 para usar pocion
         if (Enemigo.Raza >= Jugador.Raza)          //Para elegir quien ataca primero me baso en su raza siendo Hada>Centauro>Ogro y si son de la misma raza va primero el jugador
         {
+            Console.WriteLine("\n");
             ConjuntoDePersonaje.Atacante = Jugador;                                    //Este bloque es para realizar la accion del jugador
             ConjuntoDePersonaje.Defensor = Enemigo;
             ConjuntoDePersonaje = RealizarMovimiento(ConjuntoDePersonaje, opcion);
@@ -163,6 +173,7 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
             Enemigo = ConjuntoDePersonaje.Defensor;
             if (Enemigo.EstaVivo())
             {
+                Console.WriteLine("\n");
                 ConjuntoDePersonaje.Atacante = Enemigo;                                    //Este bloque es para realizar la accion del enemigo
                 ConjuntoDePersonaje.Defensor = Jugador;
                 ConjuntoDePersonaje = RealizarMovimiento(ConjuntoDePersonaje, Enemigo.ElegirMovimiento());
@@ -172,6 +183,7 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
         }
         else
         {
+            Console.WriteLine("\n");
             ConjuntoDePersonaje.Atacante = Enemigo;                                    //Este bloque es para realizar la accion del enemigo
             ConjuntoDePersonaje.Defensor = Jugador;
             ConjuntoDePersonaje = RealizarMovimiento(ConjuntoDePersonaje, Enemigo.ElegirMovimiento());
@@ -179,6 +191,7 @@ static Personajes Pelear(Personajes Jugador, Personajes Enemigo)
             Jugador = ConjuntoDePersonaje.Defensor;
             if (Jugador.EstaVivo())
             {
+                Console.WriteLine("\n");
                 ConjuntoDePersonaje.Atacante = Jugador;                                    //Este bloque es para realizar la accion del jugador
                 ConjuntoDePersonaje.Defensor = Enemigo;
                 ConjuntoDePersonaje = RealizarMovimiento(ConjuntoDePersonaje, opcion);
@@ -210,6 +223,7 @@ static int ElegirOpcion(Personajes Jugador)        // Regresa un string con 1 pa
         Console.WriteLine(" 2-Concentrar");
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(" 3-Tomar pocion(Pociones restantes:" + Jugador.Pociones + ")");
+        Console.ForegroundColor=ConsoleColor.White;
         strOpcion = Console.ReadLine();
     } while (strOpcion != "1" && strOpcion != "2" && strOpcion != "3");
     int.TryParse(strOpcion, out opcion);
@@ -284,7 +298,16 @@ static void Finalizar(Personajes Jugador)
     var helper = new HelperDeJson();
     string NombreDelArchivo = "Historial del jugadores";
 
-    Jugador.MostrarOleadaFinal();
+    if(Jugador.Ganar())
+    {
+        Corona corona=new Corona();
+        Felicidades felicidas= new Felicidades();
+        corona.Mostrar();
+        felicidas.Mostrar();
+        Console.WriteLine("Losgraste tu objetivo y te convertiste en el/la Rey del castillo");
+        Jugador.MostrarOleadaFinal();
+
+    }
     JugadorSerializado = JsonSerializer.Serialize(Jugador);
 
     helper.GuardarArchivoTexto(NombreDelArchivo, JugadorSerializado);

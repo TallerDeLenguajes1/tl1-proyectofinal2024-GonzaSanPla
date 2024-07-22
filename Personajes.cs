@@ -29,7 +29,7 @@ public class Personajes
         Pociones=3;
         Concentrado=false;
         Movimiento=1;
-        oleada=1;
+        oleada=10;
         switch(numRaza)
         {
             case 1:                     //Balancear las estadisticas 
@@ -134,7 +134,7 @@ public class Personajes
     public void MostrarVida()
     {
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("\nVida de "+Nombre+": "+VidaActual);
+        Console.WriteLine("\nVida de "+Nombre+": "+VidaActual+"/"+vidaMaxima);
 
     }
 
@@ -263,6 +263,16 @@ public class Personajes
     {
         Console.ForegroundColor=ConsoleColor.White;
         Console.WriteLine(Nombre+" lllego hasta la oleada numero:"+oleada);
+    }
+    public bool Ganar()
+    {
+        if(oleada>=10)
+        {
+            return true;
+        }else
+        {
+            return false;
+        }
     }
     public string Nombre { get => nombre; set => nombre = value; }
     public float VidaActual { get => vidaActual; set => vidaActual = value; }

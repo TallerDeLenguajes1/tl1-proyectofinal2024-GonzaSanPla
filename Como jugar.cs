@@ -29,8 +29,11 @@ class ComoJuagar
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("ATACAR- Elijiendo esta opcion lo atacaras al enemigo reduciendo su salud, esto se hace teniendo en ceunta tu ataque y la defensa del enemigo.Pero mucho CUIDADO tu atauqes pueden fallar segun la evasion del enigo de misma forma que tu podras llegar a evitar ataques");
         Console.ForegroundColor = ConsoleColor.Blue;
-        Console.WriteLine("CONCENTRAR- Mediante la concentracion lograras aguantar mejor el ataque enemigo y te permitira pegar mas fuerte en tu siguiente movimiento. Ten en cuenta que los veneficios solo duraran un turno asi que eleje sabiamente tu proximo movimiento");
+        Console.WriteLine("CONCENTRAR- Mediante la concentracion lograras aguantar mejor el ataque enemigo y te permitira pegar mas fuerte en tu siguiente movimiento. Ten en cuenta que los beneficios SOLO duraran un turno asi que eleje sabiamente tu proximo movimiento");
         Console.ForegroundColor = ConsoleColor.DarkRed;
-        Console.WriteLine("TOMAR UNA POCIONES- Durante la partida tendras la opcion de usar una de tus TRES pociones que te recuperaran la mitad de la vida. Es un recurso valioso ya que es la UNICA dfroma de recuperar vida");
+        Console.WriteLine("TOMAR UNA POCIONES- Durante la partida tendras la opcion de usar una de tus TRES pociones que te recuperaran la mitad de la vida. Es un recurso valioso ya que es la UNICA forma de recuperar vida");
+
+        Console.ForegroundColor=ConsoleColor.White;
+        Console.WriteLine("Luego de derrotar a cada enemigo obetendras una mejora segun el enemigo que hayas derrotado");
     }
 }
