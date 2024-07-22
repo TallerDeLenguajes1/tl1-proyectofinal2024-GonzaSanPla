@@ -46,9 +46,12 @@ static void Inicio()
     TextoInicial textoI = new TextoInicial();
     Castillo castillo = new Castillo();
     ComoJuagar comoJ = new ComoJuagar();
+
     titulo.Mostrar();
+    Pausa();
     textoI.Mostrar();
     castillo.Mostrar();
+    Pausa();
     comoJ.Mostrar();
 }
 
@@ -102,10 +105,10 @@ static int ElegirRaza()
     MostrarCentauro centauro= new MostrarCentauro();
     MostrarOgro ogro= new MostrarOgro();
     Console.ForegroundColor = ConsoleColor.Magenta;
-    Console.WriteLine("\nHada: Fragil pero gracias su diminuta altura puede evitar muchos golpes aprovebchandose de su alta velocidad");
+    Console.WriteLine("\nHada: Fragil pero gracias su diminuta altura y alta velocidad puede evitar muchos golpes");
     hada.Mostrar();
     Console.ForegroundColor = ConsoleColor.DarkCyan;
-    Console.WriteLine("\nCentauro: Logra aguantar unos cuantes golpes y con algo de agilidad se mueve evitando algunos ataques");
+    Console.WriteLine("\nCentauro: Logra aguantar unos cuantes golpes y con cierta agilidad se mueve evitando algunos ataques");
     centauro.Mostrar();
     Console.ForegroundColor = ConsoleColor.DarkGreen;
     Console.WriteLine("\nOgro: Debido a su gran tamanio se le complica movese velozmente lo cual queda extramadamente vulnerable a los golpes enemigos. Pero lo compensa con su gran capacidad de recibir golpes");
@@ -285,4 +288,12 @@ static void Finalizar(Personajes Jugador)
     JugadorSerializado = JsonSerializer.Serialize(Jugador);
 
     helper.GuardarArchivoTexto(NombreDelArchivo, JugadorSerializado);
+}
+
+static void Pausa()
+{
+    string basura;
+    Console.ForegroundColor=ConsoleColor.White;
+    Console.WriteLine("Presione enter para continuar.");
+    basura=Console.ReadLine();
 }
