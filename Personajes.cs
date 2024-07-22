@@ -29,7 +29,7 @@ public class Personajes
         Pociones=3;
         Concentrado=false;
         Movimiento=1;
-        oleada=10;
+        oleada=1;
         switch(numRaza)
         {
             case 1:                     //Balancear las estadisticas 

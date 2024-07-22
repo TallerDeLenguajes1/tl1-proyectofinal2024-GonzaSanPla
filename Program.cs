@@ -26,7 +26,7 @@ Personajes Enemigo;
 
 Inicio();
 Jugador = FabricaDeJugador();
-Jugador.MostrarEstadisticas();
+// Jugador.MostrarEstadisticas();
 while (Jugador.EstaVivo()&&!Jugador.Ganar())
 {
     MostrarOleada(Jugador);
@@ -305,8 +305,11 @@ static void Finalizar(Personajes Jugador)
         corona.Mostrar();
         felicidas.Mostrar();
         Console.WriteLine("Losgraste tu objetivo y te convertiste en el/la Rey del castillo");
+    }else
+    {
+        Fasllaste fallo= new Fasllaste();
+        fallo.Mostrar();
         Jugador.MostrarOleadaFinal();
-
     }
     JugadorSerializado = JsonSerializer.Serialize(Jugador);
 

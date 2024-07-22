@@ -10,3 +10,4 @@
 {"Nombre":"A","VidaActual":75,"Evasion":50,"Defensa":25,"Ataque":25,"DatosBasicos":null,"Pociones":3,"Raza":1,"VidaMaxima":75,"Concentrado":false,"Movimiento":1}
 {"Nombre":"A","VidaActual":75,"Evasion":50,"Defensa":25,"Ataque":25,"DatosBasicos":null,"Pociones":3,"Raza":1,"VidaMaxima":75,"Concentrado":false,"Movimiento":1}
 {"Nombre":"a","VidaActual":75,"Evasion":50,"Defensa":25,"Ataque":25,"DatosBasicos":null,"Pociones":3,"Raza":1,"VidaMaxima":75,"Concentrado":false,"Movimiento":1}
+{"Nombre":"a","VidaActual":0,"Evasion":50,"Defensa":25,"Ataque":25,"DatosBasicos":null,"Pociones":3,"Raza":1,"VidaMaxima":75,"Concentrado":false,"Movimiento":1}
