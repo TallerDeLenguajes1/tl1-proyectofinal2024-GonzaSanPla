@@ -57,7 +57,7 @@ public class Personajes
                 Defensa=35;
                 break;
         }
-        VidaActual=0;
+
     }
 
 
