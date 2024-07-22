@@ -25,20 +25,23 @@ Personajes Jugador;
 Personajes Enemigo;
 
 Inicio();
-Jugador = FabricaDeJugador();
-// Jugador.MostrarEstadisticas();
-while (Jugador.EstaVivo()&&!Jugador.Ganar())
+do
 {
-    MostrarOleada(Jugador);
-    Enemigo = await FabricaDeEnemigo();
-    Enemigo.PresentarEnemigo();
-    Jugador = Pelear(Jugador, Enemigo);
-    if (Jugador.EstaVivo())
+    Jugador = FabricaDeJugador();
+    // Jugador.MostrarEstadisticas();
+    while (Jugador.EstaVivo()&&!Jugador.Ganar())
     {
-        Jugador.RecibirRecompensa(Enemigo.Raza);
+        MostrarOleada(Jugador);
+        Enemigo = await FabricaDeEnemigo();
+        Enemigo.PresentarEnemigo();
+        Jugador = Pelear(Jugador, Enemigo);
+        if (Jugador.EstaVivo())
+        {
+            Jugador.RecibirRecompensa(Enemigo.Raza);
+        }
     }
-}
-Finalizar(Jugador);
+    Finalizar(Jugador);
+}while(SegirJugando());
 
 static void Inicio()
 {
@@ -322,4 +325,27 @@ static void Pausa()
     Console.ForegroundColor=ConsoleColor.White;
     Console.WriteLine("Presione enter para continuar.");
     basura=Console.ReadLine();
+}
+
+static bool SegirJugando()
+{
+    string respuesta;
+    do
+    {
+        Console.ForegroundColor=ConsoleColor.White;
+        Console.WriteLine("Desea jugar de nuevo?");
+        Console.ForegroundColor=ConsoleColor.Green;
+        Console.WriteLine("0-Si");
+        Console.ForegroundColor=ConsoleColor.Red;
+        Console.WriteLine("1-No");
+        Console.ForegroundColor=ConsoleColor.White;
+        respuesta=Console.ReadLine();
+    }while(respuesta!="1"&& respuesta!="0");
+    if(respuesta=="0")
+    {
+        return true;
+    }else
+    {
+        return false;
+    }
 }
