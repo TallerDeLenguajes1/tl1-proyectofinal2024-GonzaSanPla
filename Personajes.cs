@@ -7,7 +7,6 @@ namespace EspacioPersonajes;
 
 public class Personajes
 {
-    private InfoBasica datosBasicos;
      
     private string nombre;
 
@@ -280,7 +279,6 @@ public class Personajes
     public int Evasion { get => evasion; set => evasion = value; }
     public int Defensa { get => defensa; set => defensa = value; }
     public int Ataque { get => ataque; set => ataque = value; }
-    public InfoBasica DatosBasicos { get => datosBasicos; set => datosBasicos = value; }
     public int Pociones { get => pociones; set => pociones = value; }
     public int Raza { get => raza; set => raza = value; }
     public float VidaMaxima { get => vidaMaxima; set => vidaMaxima = value; }

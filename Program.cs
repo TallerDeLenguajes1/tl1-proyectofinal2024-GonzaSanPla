@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using EspacioPersonajes;
+using EspacioRoot;
 
 /*
 Colores y su signficado:
@@ -81,13 +82,12 @@ static void MostrarOleada(Personajes Jugador)
 static async Task<Personajes> FabricaDeEnemigo()
 {
     Random rand = new Random();
-    // InfoBasica info= await ObtenerInfoBas();
-    //CAMBIAR Enemigo por el nombre traido por la API
-    Personajes pj = new Personajes("Enemigo", rand.Next(1, 4));//Genera un numero al azar entre 1 y 3 
+    Root info= await ObtenerRoot();
+    Personajes pj = new Personajes(info.Results[0].Name.First, rand.Next(1, 4));//Genera un numero al azar entre 1 y 3 
     return pj;
 }
 
-static async Task<InfoBasica> ObtenerInfoBas()
+static async Task<Root> ObtenerRoot()
 {
     var url = "https://randomuser.me/api/";
     try
@@ -96,7 +96,7 @@ static async Task<InfoBasica> ObtenerInfoBas()
         HttpResponseMessage response = await client.GetAsync(url);
         response.EnsureSuccessStatusCode();
         string responseBody = await response.Content.ReadAsStringAsync();
-        InfoBasica infoBas = JsonSerializer.Deserialize<InfoBasica>(responseBody);
+        Root infoBas = JsonSerializer.Deserialize<Root>(responseBody);
         return infoBas;
     }
     catch (HttpRequestException e)
