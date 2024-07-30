@@ -1,0 +1,3 @@
+{"Nombre":"yo","VidaActual":0,"Evasion":75,"Defensa":30,"Ataque":45,"Pociones":0,"Raza":2,"VidaMaxima":100,"Concentrado":false,"Movimiento":1}
+{"Nombre":"Otro yo","VidaActual":75,"Evasion":50,"Defensa":25,"Ataque":25,"Pociones":3,"Raza":1,"VidaMaxima":75,"Concentrado":false,"Movimiento":1,"Oleada":1}
+{"Nombre":"Yo 3","VidaActual":100,"Evasion":25,"Defensa":30,"Ataque":25,"Pociones":3,"Raza":2,"VidaMaxima":100,"Concentrado":false,"Movimiento":1,"Oleada":1}

@@ -30,19 +30,19 @@ do
 {
     Jugador = FabricaDeJugador();
     // Jugador.MostrarEstadisticas();
-    while (Jugador.EstaVivo()&&!Jugador.Ganar())
-    {
-        MostrarOleada(Jugador);
-        Enemigo = await FabricaDeEnemigo();
-        Enemigo.PresentarEnemigo();
-        Jugador = Pelear(Jugador, Enemigo);
-        if (Jugador.EstaVivo())
-        {
-            Jugador.RecibirRecompensa(Enemigo.Raza);
-        }
-    }
+    // while (Jugador.EstaVivo() && !Jugador.Ganar())
+    // {
+    //     MostrarOleada(Jugador);
+    //     Enemigo = await FabricaDeEnemigo();
+    //     Enemigo.PresentarEnemigo();
+    //     Jugador = Pelear(Jugador, Enemigo);
+    //     if (Jugador.EstaVivo())
+    //     {
+    //         Jugador.RecibirRecompensa(Enemigo.Raza);
+    //     }
+    // }
     Finalizar(Jugador);
-}while(SegirJugando());
+} while (SegirJugando());
 
 static void Inicio()
 {
@@ -68,21 +68,21 @@ static Personajes FabricaDeJugador()
     {
         Console.WriteLine("\nIngresa tu nombre:");
         nombreJ = Console.ReadLine();
-    }while (nombreJ=="");
+    } while (nombreJ == "");
     raza = ElegirRaza();
     Personajes pj = new Personajes(nombreJ, raza);
     return pj;
 }
 static void MostrarOleada(Personajes Jugador)
 {
-    ProximaOleada proxOl= new ProximaOleada();
+    ProximaOleada proxOl = new ProximaOleada();
     proxOl.Mostrar();
     Jugador.MostrarOleada();
 }
 static async Task<Personajes> FabricaDeEnemigo()
 {
     Random rand = new Random();
-    Root info= await ObtenerRoot();
+    Root info = await ObtenerRoot();
     Personajes pj = new Personajes(info.Results[0].Name.First, rand.Next(1, 4));//Genera un numero al azar entre 1 y 3 
     return pj;
 }
@@ -112,9 +112,9 @@ static int ElegirRaza()
     bool condiciones;
     string strRaza;
     int raza;
-    MostrarHada hada= new MostrarHada();
-    MostrarCentauro centauro= new MostrarCentauro();
-    MostrarOgro ogro= new MostrarOgro();
+    MostrarHada hada = new MostrarHada();
+    MostrarCentauro centauro = new MostrarCentauro();
+    MostrarOgro ogro = new MostrarOgro();
     Console.ForegroundColor = ConsoleColor.Magenta;
     Console.WriteLine("\nHada: Fragil pero gracias su diminuta altura y alta velocidad puede evitar muchos golpes");
     hada.Mostrar();
@@ -134,7 +134,7 @@ static int ElegirRaza()
         Console.WriteLine("\n  2-Centauro");
         Console.ForegroundColor = ConsoleColor.DarkGreen;
         Console.WriteLine("\n  3-Ogro");
-        Console.ForegroundColor=ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.White;
         strRaza = Console.ReadLine();
         if (int.TryParse(strRaza, out raza))        // Para controlar si es un numero y sies un numero valido
         {
@@ -226,7 +226,7 @@ static int ElegirOpcion(Personajes Jugador)        // Regresa un string con 1 pa
         Console.WriteLine(" 2-Concentrar");
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine(" 3-Tomar pocion(Pociones restantes:" + Jugador.Pociones + ")");
-        Console.ForegroundColor=ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.White;
         strOpcion = Console.ReadLine();
     } while (strOpcion != "1" && strOpcion != "2" && strOpcion != "3");
     int.TryParse(strOpcion, out opcion);
@@ -297,34 +297,68 @@ static PersonajesEnCombate RealizarMovimiento(PersonajesEnCombate ConjuntoDePers
 
 static void Finalizar(Personajes Jugador)
 {
-    string JugadorSerializado;
-    var helper = new HelperDeJson();
-    string NombreDelArchivo = "Historial del jugadores";
 
-    if(Jugador.Ganar())
+    if (Jugador.Ganar())
     {
-        Corona corona=new Corona();
-        Felicidades felicidas= new Felicidades();
+        Corona corona = new Corona();
+        Felicidades felicidas = new Felicidades();
         corona.Mostrar();
         felicidas.Mostrar();
         Console.WriteLine("Losgraste tu objetivo y te convertiste en el/la Rey del castillo");
-    }else
+    }
+    else
     {
-        Fasllaste fallo= new Fasllaste();
+        Fasllaste fallo = new Fasllaste();
         fallo.Mostrar();
         Jugador.MostrarOleadaFinal();
     }
-    JugadorSerializado = JsonSerializer.Serialize(Jugador);
+    ManejoDeArchivo(Jugador);
+}
 
+static void ManejoDeArchivo(Personajes Jugador)
+{
+    string JugadorSerializado;
+    string listaJugadoresSerializado;
+    string NombreDelArchivo = "Historial del jugadores";
+    var helper = new HelperDeJson();
+    int oleada=10;
+    int ranking=1;
+
+
+    JugadorSerializado = JsonSerializer.Serialize(Jugador);
     helper.GuardarArchivoTexto(NombreDelArchivo, JugadorSerializado);
+
+    listaJugadoresSerializado=helper.AbrirArchivoTexto(NombreDelArchivo);
+    var listaJugadores=JsonSerializer.Deserialize<List<Personajes>>(listaJugadoresSerializado);
+    
+    Console.ForegroundColor=ConsoleColor.White;
+    Console.WriteLine("Ranking   Oleada   Nombre");
+    while(oleada>0)
+    {
+        foreach(Personajes jugdor in listaJugadores)
+        {
+            if(oleada==jugdor.Oleada)
+            {
+                if(oleada==10)
+                {
+                    Console.ForegroundColor=ConsoleColor.Yellow;
+                }else
+                {
+                    Console.ForegroundColor=ConsoleColor.White;
+                }
+                Console.WriteLine(ranking+"       "+oleada+"       "+jugdor.Nombre);
+            }
+        }
+        oleada--;
+    }
 }
 
 static void Pausa()
 {
     string basura;
-    Console.ForegroundColor=ConsoleColor.White;
+    Console.ForegroundColor = ConsoleColor.White;
     Console.WriteLine("Presione enter para continuar.");
-    basura=Console.ReadLine();
+    basura = Console.ReadLine();
 }
 
 static bool SegirJugando()
@@ -332,19 +366,20 @@ static bool SegirJugando()
     string respuesta;
     do
     {
-        Console.ForegroundColor=ConsoleColor.White;
+        Console.ForegroundColor = ConsoleColor.White;
         Console.WriteLine("Desea jugar de nuevo?");
-        Console.ForegroundColor=ConsoleColor.Green;
+        Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("0-Si");
-        Console.ForegroundColor=ConsoleColor.Red;
+        Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("1-No");
-        Console.ForegroundColor=ConsoleColor.White;
-        respuesta=Console.ReadLine();
-    }while(respuesta!="1"&& respuesta!="0");
-    if(respuesta=="0")
+        Console.ForegroundColor = ConsoleColor.White;
+        respuesta = Console.ReadLine();
+    } while (respuesta != "1" && respuesta != "0");
+    if (respuesta == "0")
     {
         return true;
-    }else
+    }
+    else
     {
         return false;
     }
