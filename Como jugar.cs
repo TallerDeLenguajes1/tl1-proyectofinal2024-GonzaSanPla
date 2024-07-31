@@ -27,7 +27,7 @@ class ComoJuagar
         Console.WriteLine("Para  poder llegar a ser el Rey del castillo deberas enfratarte a disversos adversarios relizando movientos por turnos.");
         Console.WriteLine("En cada turno podras elegir una de las siguitens opciones como moviento:");
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("ATACAR- Elijiendo esta opcion lo atacaras al enemigo reduciendo su salud, esto se hace teniendo en ceunta tu ataque y la defensa del enemigo.Pero mucho CUIDADO tu atauqes pueden fallar segun la evasion del enigo de misma forma que tu podras llegar a evitar ataques");
+        Console.WriteLine("ATACAR- Elijiendo esta opcion lo atacaras al enemigo reduciendo su salud, esto se hace teniendo en cuenta tu ataque y la defensa del enemigo.Pero mucho CUIDADO tu atauqes pueden fallar segun la evasion del enigo de misma forma que tu podras llegar a evitar ataques");
         Console.ForegroundColor = ConsoleColor.Blue;
         Console.WriteLine("CONCENTRAR- Mediante la concentracion lograras aguantar mejor el ataque enemigo y te permitira pegar mas fuerte en tu siguiente movimiento. Ten en cuenta que los beneficios SOLO duraran un turno asi que eleje sabiamente tu proximo movimiento");
         Console.ForegroundColor = ConsoleColor.DarkRed;

@@ -29,31 +29,30 @@ Inicio();
 do
 {
     Jugador = FabricaDeJugador();
-    // Jugador.MostrarEstadisticas();
-    // while (Jugador.EstaVivo() && !Jugador.Ganar())
-    // {
-    //     MostrarOleada(Jugador);
-    //     Enemigo = await FabricaDeEnemigo();
-    //     Enemigo.PresentarEnemigo();
-    //     Jugador = Pelear(Jugador, Enemigo);
-    //     if (Jugador.EstaVivo())
-    //     {
-    //         Jugador.RecibirRecompensa(Enemigo.Raza);
-    //     }
-    // }
+    Jugador.MostrarEstadisticas();
+    while (Jugador.EstaVivo() && !Jugador.Ganar())
+    {
+        MostrarOleada(Jugador);
+        Enemigo = await FabricaDeEnemigo();
+        Enemigo.PresentarEnemigo();
+        Jugador = Pelear(Jugador, Enemigo);
+        if (Jugador.EstaVivo())
+        {
+            Jugador.RecibirRecompensa(Enemigo.Raza);
+        }
+    }
     Finalizar(Jugador);
 } while (SegirJugando());
 
 static void Inicio()
 {
     Titulo titulo = new Titulo();
-    TextoInicial textoI = new TextoInicial();
     Castillo castillo = new Castillo();
     ComoJuagar comoJ = new ComoJuagar();
 
     titulo.Mostrar();
     Pausa();
-    textoI.Mostrar();
+    Console.WriteLine("     Erase una vez un bello castillo.EL cual su rey, ya seindo muy anciano, proclamo que su sucesor sera el luchador mas fuerte. Pordras tu quedarte con la corona y conevertirte en el Rey del catillo?");
     castillo.Mostrar();
     Pausa();
     comoJ.Mostrar();
