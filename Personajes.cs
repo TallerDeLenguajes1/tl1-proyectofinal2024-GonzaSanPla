@@ -21,7 +21,10 @@ public class Personajes
     private int movimiento;//Esta es una varible unicamente para que el enemigo elija movimiento 
     private int oleada;
 
+    public Personajes()
+    {
 
+    }
     public Personajes(string NombreIngresado, int numRaza)
     {
         Nombre= NombreIngresado; 
@@ -262,7 +265,7 @@ public class Personajes
     public void MostrarOleadaFinal()
     {
         Console.ForegroundColor=ConsoleColor.White;
-        Console.WriteLine(Nombre+" lllego hasta la oleada numero:"+Oleada);
+        Console.WriteLine(Nombre+" llego hasta la oleada numero:"+Oleada);
     }
     public bool Ganar()
     {

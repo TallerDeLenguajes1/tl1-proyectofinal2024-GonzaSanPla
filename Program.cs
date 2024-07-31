@@ -312,47 +312,83 @@ static void Finalizar(Personajes Jugador)
         fallo.Mostrar();
         Jugador.MostrarOleadaFinal();
     }
-    ManejoDeArchivo(Jugador);
+    MostrarRanking(HistorialJugadores(Jugador));
 }
 
-static void ManejoDeArchivo(Personajes Jugador)
+static List<Personajes> HistorialJugadores(Personajes Jugador)
 {
-    string JugadorSerializado;
     string listaJugadoresSerializado;
     string NombreDelArchivo = "Historial del jugadores";
     var helper = new HelperDeJson();
+
+    if(!File.Exists(NombreDelArchivo))
+    {
+        List<Personajes> listaJugadores= new List<Personajes>();
+        listaJugadores.Add(Jugador);
+
+        listaJugadoresSerializado=JsonSerializer.Serialize(listaJugadores);
+        helper.GuardarArchivoTexto(NombreDelArchivo,listaJugadoresSerializado);
+
+        return listaJugadores;
+    }else
+    {
+
+        listaJugadoresSerializado=helper.AbrirArchivoTexto(NombreDelArchivo);
+        var listaJugadores= JsonSerializer.Deserialize<List<Personajes>>(listaJugadoresSerializado);
+
+        listaJugadores.Add(Jugador);
+        listaJugadoresSerializado=JsonSerializer.Serialize(listaJugadores);
+        helper.GuardarArchivoTexto(NombreDelArchivo,listaJugadoresSerializado);
+
+        return listaJugadores;
+    }
+
+    
+}
+
+static void MostrarRanking(List<Personajes> listaJugadores)
+{ 
     int oleada=10;
     int ranking=1;
 
-
-    JugadorSerializado = JsonSerializer.Serialize(Jugador);
-    helper.GuardarArchivoTexto(NombreDelArchivo, JugadorSerializado);
-
-    listaJugadoresSerializado=helper.AbrirArchivoTexto(NombreDelArchivo);
-    var listaJugadores=JsonSerializer.Deserialize<List<Personajes>>(listaJugadoresSerializado);
-    
     Console.ForegroundColor=ConsoleColor.White;
-    Console.WriteLine("Ranking   Oleada   Nombre");
+    Console.WriteLine("\nRanking   Oleada   Nombre");
     while(oleada>0)
     {
         foreach(Personajes jugdor in listaJugadores)
         {
             if(oleada==jugdor.Oleada)
             {
-                if(oleada==10)
+                if(ranking<10)
                 {
-                    Console.ForegroundColor=ConsoleColor.Yellow;
-                }else
-                {
-                    Console.ForegroundColor=ConsoleColor.White;
+                    if(oleada==10)
+                    {
+                        Console.ForegroundColor=ConsoleColor.Yellow;
+                        Console.WriteLine(ranking+"         "+oleada+"         "+jugdor.Nombre);
+                    }else
+                    {
+                        Console.ForegroundColor=ConsoleColor.White;
+                        Console.WriteLine(ranking+"         "+oleada+"        "+jugdor.Nombre);
+                    }
                 }
-                Console.WriteLine(ranking+"       "+oleada+"       "+jugdor.Nombre);
+                else
+                {
+                    if(oleada==10)
+                    {
+                        Console.ForegroundColor=ConsoleColor.Yellow;
+                        Console.WriteLine(ranking+"        "+oleada+"         "+jugdor.Nombre);
+                    }else
+                    {
+                        Console.ForegroundColor=ConsoleColor.White;
+                        Console.WriteLine(ranking+"        "+oleada+"        "+jugdor.Nombre);
+                    }
+                }
+                ranking++;
             }
         }
         oleada--;
     }
 }
-
 static void Pausa()
 {
     string basura;
@@ -367,7 +403,7 @@ static bool SegirJugando()
     do
     {
         Console.ForegroundColor = ConsoleColor.White;
-        Console.WriteLine("Desea jugar de nuevo?");
+        Console.WriteLine("\nDesea jugar de nuevo?");
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("0-Si");
         Console.ForegroundColor = ConsoleColor.Red;

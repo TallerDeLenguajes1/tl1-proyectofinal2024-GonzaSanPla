@@ -18,7 +18,7 @@ public class HelperDeJson
 
     public void GuardarArchivoTexto(string nombreArchivo, string datos)
     {
-        using (var archivo = new FileStream(nombreArchivo, FileMode.Append))
+        using (var archivo = new FileStream(nombreArchivo, FileMode.Create))
         {
             using (var strWriter = new StreamWriter(archivo))
             {
