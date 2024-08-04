@@ -46,16 +46,13 @@ do
 
 static void Inicio()
 {
-    Titulo titulo = new Titulo();
-    Castillo castillo = new Castillo();
-    ComoJuagar comoJ = new ComoJuagar();
-
-    titulo.Mostrar();
+    Mostrar mostrar= new Mostrar();
+    mostrar.Titulo();
     Pausa();
     Console.WriteLine("     Erase una vez un bello castillo.EL cual su rey, ya seindo muy anciano, proclamo que su sucesor sera el luchador mas fuerte. Pordras tu quedarte con la corona y conevertirte en el Rey del catillo?");
-    castillo.Mostrar();
+    mostrar.Castillo();
     Pausa();
-    comoJ.Mostrar();
+    mostrar.ComoJuagar();
 }
 
 static Personajes FabricaDeJugador()
@@ -69,18 +66,18 @@ static Personajes FabricaDeJugador()
         nombreJ = Console.ReadLine();
         if(nombreJ.StartsWith(' '))
         {
-            Console.WriteLine("\nSu nombre no puede iniciar por espacio");
+            Console.WriteLine("\nSu nombre no puede inciar por espacio");
         }
     } while (nombreJ == "" || nombreJ.StartsWith(' ')||nombreJ.Length>12);
-    
-    
+    raza = ElegirRaza();
+
     Personajes pj = new Personajes(nombreJ, raza);
     return pj;
 }
 static void MostrarOleada(Personajes Jugador)
 {
-    ProximaOleada proxOl = new ProximaOleada();
-    proxOl.Mostrar();
+    Mostrar most = new Mostrar();
+    most.ProximaOleada();
     Jugador.MostrarOleada();
 }
 static async Task<Personajes> FabricaDeEnemigo()
@@ -116,18 +113,17 @@ static int ElegirRaza()
     bool condiciones;
     string strRaza;
     int raza;
-    MostrarHada hada = new MostrarHada();
-    MostrarCentauro centauro = new MostrarCentauro();
-    MostrarOgro ogro = new MostrarOgro();
+    Mostrar most = new Mostrar();
+
     Console.ForegroundColor = ConsoleColor.Magenta;
     Console.WriteLine("\nHada: Fragil pero gracias su diminuta altura y alta velocidad puede evitar muchos golpes");
-    hada.Mostrar();
+    most.Hada();
     Console.ForegroundColor = ConsoleColor.DarkCyan;
     Console.WriteLine("\nCentauro: Logra aguantar unos cuantes golpes y con cierta agilidad se mueve evitando algunos ataques");
-    centauro.Mostrar();
+    most.Centauro();
     Console.ForegroundColor = ConsoleColor.DarkGreen;
     Console.WriteLine("\nOgro: Debido a su gran tamanio se le complica movese velozmente lo cual queda extramadamente vulnerable a los golpes enemigos. Pero lo compensa con su gran capacidad de recibir golpes");
-    ogro.Mostrar();
+    most.Ogro();
     do
     {
         Console.ForegroundColor = ConsoleColor.White;
@@ -301,19 +297,18 @@ static PersonajesEnCombate RealizarMovimiento(PersonajesEnCombate ConjuntoDePers
 
 static void Finalizar(Personajes Jugador)
 {
+    Mostrar most = new Mostrar();
 
     if (Jugador.Ganar())
     {
-        Corona corona = new Corona();
-        Felicidades felicidas = new Felicidades();
-        corona.Mostrar();
-        felicidas.Mostrar();
+        most.Corona();
+        most.Felicidades();
         Console.WriteLine("Losgraste tu objetivo y te convertiste en el/la Rey del castillo");
     }
     else
     {
-        Fasllaste fallo = new Fasllaste();
-        fallo.Mostrar();
+    
+        most.Fasllaste();
         Jugador.MostrarOleadaFinal();
     }
     MostrarRanking(HistorialJugadores(Jugador));
@@ -368,7 +363,7 @@ static void MostrarRanking(List<Personajes> listaJugadores)
                     if(oleada==10)
                     {
                         Console.ForegroundColor=ConsoleColor.Yellow;
-                        Console.WriteLine(ranking+"         "+oleada+"         "+jugdor.Nombre);
+                        Console.WriteLine(ranking+"         "+oleada+"       "+jugdor.Nombre);
                     }else
                     {
                         Console.ForegroundColor=ConsoleColor.White;
