@@ -29,7 +29,7 @@ Inicio();
 do
 {
     Jugador = FabricaDeJugador();
-    Jugador.MostrarEstadisticas();
+    // Jugador.MostrarEstadisticas();
     while (Jugador.EstaVivo() && !Jugador.Ganar())
     {
         MostrarOleada(Jugador);
@@ -65,10 +65,15 @@ static Personajes FabricaDeJugador()
     Console.ForegroundColor = ConsoleColor.White;
     do
     {
-        Console.WriteLine("\nIngresa tu nombre:");
+        Console.WriteLine("\nIngresa tu nombre(Maximo 12 caracteres):");
         nombreJ = Console.ReadLine();
-    } while (nombreJ == "");
-    raza = ElegirRaza();
+        if(nombreJ.StartsWith(' '))
+        {
+            Console.WriteLine("\nSu nombre no puede iniciar por espacio");
+        }
+    } while (nombreJ == "" || nombreJ.StartsWith(' ')||nombreJ.Length>12);
+    
+    
     Personajes pj = new Personajes(nombreJ, raza);
     return pj;
 }
